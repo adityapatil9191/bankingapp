@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+.bank-icon-mybank{
+    height: 10%;
+    width: 5%;
+    left: 11px;
+}
+
+
+
+footer.bg-dark{
+    position: fixed;
+    height: 50px !important;
+    bottom: 0;
+    width: 100%;
+}

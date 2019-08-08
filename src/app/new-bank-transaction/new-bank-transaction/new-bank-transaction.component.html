@@ -1,0 +1,103 @@
+<div class="col-md-12">
+  <div class="row">
+    <div class="container-fluid">
+      <div class="card card-body bg-light">
+        <h1 class="payment-header">Enter the transaction details</h1>
+          <form [formGroup]="paymentsForm" (ngSubmit)="onSubmit()">
+              <div class="form-row">
+                <div class="form-group col-md-2">
+                  <label for="reference">Reference No #</label>
+                  <h6>{{referenceNumber}}</h6>
+                </div>
+                <div class="form-group col-md-5">
+                  <label for="customerNumber">customer number</label>
+                  <input [(ngModel)]="customerNumber" formControlName="custNumber" class="form-control" id="customerNumber" placeholder="customerNumber">
+                  <div class="error-text" *ngIf="paymentsForm.controls.custNumber.touched && paymentsForm.controls.custNumber.invalid">
+                    Customer Number is Mandatory
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="custName">Name</label>
+                    <input [(ngModel)]="customerName" formControlName="name" type="text" class="form-control" id="custName" placeholder="XYZ">
+                    <div class="error-text" *ngIf="paymentsForm.controls.name.touched && paymentsForm.controls.name.invalid">
+                        Customer Name is Mandatory
+                      </div>
+                  </div>
+              </div>
+              <div class="form-row">
+                  
+                <div class="form-group col-md-12">
+                  <label for="inputAddress">Address</label>
+                  <input [(ngModel)]="customerAddress" formControlName="address" type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                  <div class="error-text" *ngIf="paymentsForm.controls.address.touched && paymentsForm.controls.address.invalid">
+                      Customer Address is Mandatory
+                    </div>
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="phoneNumer">Phone Number</label>
+                  <input [(ngModel)]="customerPhone" formControlName="phoneNumber" type="text" class="form-control" placeholder="123456789" id="phoneNumer">
+                  <div class="error-text" *ngIf="paymentsForm.controls.phoneNumber.touched && paymentsForm.controls.phoneNumber.invalid">
+                      <div *ngIf="paymentsForm.controls.phoneNumber.errors.required">Customer Phone Number is Mandatory</div>
+                      <div *ngIf="paymentsForm.controls.phoneNumber.errors.pattern">Customer Phone Number should be numeric.</div>
+                    </div>
+                  </div>
+                <div class="form-group col-md-4">
+                    <label for="amount">Amount</label>
+                    <input formControlName="amount" type="text" placeholder="example 1234" class="form-control" id="amount">
+                    <div class="error-text" *ngIf="paymentsForm.controls.amount.touched && paymentsForm.controls.amount.invalid">
+                        <div *ngIf="paymentsForm.controls.amount.errors.required">Amount is Mandatory</div>
+                        <div *ngIf="paymentsForm.controls.amount.errors.pattern">Amount should be numeric.</div>
+                      </div>                  
+                  </div>
+                <div class="form-group col-md-2">
+                  <label for="currency">currency</label>
+                  <select formControlName="currency" class="form-control" id="currency">
+                      <option>AED</option>
+                      <option>EUR</option>
+                      <option>MUR</option>
+                      <option>CHF</option>
+                      <option>USD</option>
+                    </select>
+                    <div class="error-text" *ngIf="paymentsForm.controls.currency.touched && paymentsForm.controls.currency.invalid">
+                        <div *ngIf="paymentsForm.controls.currency.errors.required">Please select currency</div>
+                      </div>
+                </div>
+              </div>
+              <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="bbank">Beneficiary Bank</label>
+                    <input formControlName="beneficiaryBank" class="form-control" id="bbank" placeholder="beneficiary bank">
+                    <div class="error-text" *ngIf="paymentsForm.controls.beneficiaryBank.touched && paymentsForm.controls.beneficiaryBank.invalid">
+                        <div *ngIf="paymentsForm.controls.beneficiaryBank.errors.required">Please Enter Beneficiary Bank Details</div>
+                        <div *ngIf="paymentsForm.controls.beneficiaryBank.errors.pattern">Beneficiary Bank details should be characters.</div>
+                      </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="baNumber">Beneficiary Account number</label>
+                    <input formControlName="beneficiaryAccountNumber" class="form-control" id="baNumber" placeholder="beneficiary Number">
+                    <div class="error-text" *ngIf="paymentsForm.controls.beneficiaryAccountNumber.touched && paymentsForm.controls.beneficiaryAccountNumber.invalid">
+                        <div *ngIf="paymentsForm.controls.beneficiaryAccountNumber.errors.required">Please Enter Beneficiary Account Details</div>
+                      </div>
+                  </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="bbank">Payment details</label>
+                      <input formControlName="payDetails" class="form-control" id="pdetails" placeholder="payment details">
+                      <div class="error-text" *ngIf="paymentsForm.controls.payDetails.touched && paymentsForm.controls.payDetails.invalid">
+                          <div *ngIf="paymentsForm.controls.payDetails.errors.required">Please Enter Payment Details</div>
+                          <div *ngIf="paymentsForm.controls.payDetails.errors.pattern">Payment details should be characters.</div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="wrapper">
+                      <button [disabled]="paymentsForm.invalid" class="btn btn-primary">Make Payment</button>
+                  </div>
+                </form>
+      </div>
+    </div>  
+  </div>   
+</div>

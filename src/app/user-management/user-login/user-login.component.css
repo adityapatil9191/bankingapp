@@ -164,3 +164,8 @@
   .form-label-group input:not(:placeholder-shown){
     padding:3px;
   }
+
+  .error-text{
+    color:red;
+    background-color: antiquewhite;
+}

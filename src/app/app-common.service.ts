@@ -10,8 +10,9 @@ export class AppCommonService {
   public authToken;
   baseUrl = "https://ngdemoapi.getsandbox.com";
   constructor(private http:HttpClient) { }
-  public getJson=()=>{
-    return this.http.get('/assets/customer.json');
+  
+  public getJson=(custNumber)=>{
+    return this.http.get(this.baseUrl+'/customerById/'+custNumber);
   }
 
   public savePaymentDetails(object){

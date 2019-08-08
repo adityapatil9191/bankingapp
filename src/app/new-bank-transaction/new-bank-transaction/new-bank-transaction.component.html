@@ -10,8 +10,8 @@
                   <h6>{{referenceNumber}}</h6>
                 </div>
                 <div class="form-group col-md-5">
-                  <label for="customerNumber">customer number</label>
-                  <input [(ngModel)]="customerNumber" formControlName="custNumber" class="form-control" id="customerNumber" placeholder="customerNumber">
+                  <label for="customerNumber">customer number {{customerNumber}}</label>
+                  <input (input)="getJsonResponse($event.target.value)" [(ngModel)]="customerNumber" formControlName="custNumber" class="form-control" id="customerNumber" placeholder="customerNumber">
                   <div class="error-text" *ngIf="paymentsForm.controls.custNumber.touched && paymentsForm.controls.custNumber.invalid">
                     Customer Number is Mandatory
                   </div>

@@ -33,22 +33,18 @@ export class NewBankTransactionComponent implements OnInit {
       beneficiaryAccountNumber: new FormControl('',[Validators.required]),
       payDetails: new FormControl('',[Validators.required,Validators.pattern(/[aA-zZ0-9'-]$/)]),
     });
-    this.getJsonResponse();
+    this.getJsonResponse(this.customerNumber);
     this.referenceNumber = this.generateReferenceNumber();
   }
 
   
   onChanges(data){
-    this.paymentsForm.valueChanges.subscribe(
-      val=>{
-        let customerInformation = data.responseXML.getCustomerInfoResponse.getCustomerInfoResult.CUST_INFO;
-        if(val.custNumber === customerInformation.CUST_NO){
-          this.customerAddress = customerInformation.STREET_ADDR +" "+ customerInformation.ADDRESS_LINE2+" "+customerInformation.ADDRESS_LINE3+" "+customerInformation.TOWN_COUNTRY;
-          this.customerName = customerInformation.SHORT_NAME;
-          this.customerPhone = customerInformation.CONTACT_INFO_V7.CONTACT_INFO_V7.PHONE_LIST_V7.PHONE_LIST_ITEM_V7.PHONE;
-        }
-      }
-    )
+  
+   if(data.CUST_INFO!==undefined && data.CUST_INFO.CUST_NO !== undefined){
+    this.customerAddress = data.CUST_INFO.STREET_ADDR +" "+ data.CUST_INFO.ADDRESS_LINE2+" "+data.CUST_INFO.ADDRESS_LINE3+" "+data.CUST_INFO.TOWN_COUNTRY;
+    this.customerName = data.CUST_INFO.SHORT_NAME;
+    this.customerPhone = data.CUST_INFO.CONTACT_INFO_V7.CONTACT_INFO_V7.PHONE_LIST_V7.PHONE_LIST_ITEM_V7.PHONE;
+   }
   }
 
   generateReferenceNumber(){
@@ -59,12 +55,21 @@ export class NewBankTransactionComponent implements OnInit {
     return referenceString;
   }
 
-  getJsonResponse(){
-    return this.appCommonService.getJson().subscribe(
+  getJsonResponse(value){
+    return this.appCommonService.getJson(value).subscribe(
       (data)=>{
         this.onChanges(data);
+      },
+      (error)=>{
+        console.log(error);
       }
     )
+  }
+
+  updateReferenceNumber(){
+    let upDatedFourDigitNumber = parseInt(this.referenceNumber.substring(11,))+1;
+    this.referenceNumber = this.referenceNumber.substring(0,11)+ upDatedFourDigitNumber;
+    return this.referenceNumber;
   }
 
   onSubmit(){
@@ -87,8 +92,9 @@ export class NewBankTransactionComponent implements OnInit {
     this.appCommonService.savePaymentDetails(obj).subscribe(
       (data:any)=>{
         if(data.status === "success"){
+          this.referenceNumber = this.updateReferenceNumber();
           console.log(obj);
-          alert("Payments Successful");
+          alert("Payment Successful");
         }
       },
       (error)=>{
